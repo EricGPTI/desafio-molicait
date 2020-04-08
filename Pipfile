@@ -12,6 +12,7 @@ pymongo = "*"
 djangorestframework = "*"
 django-filter = "*"
 markdown = "*"
+python-decouple = "*"
 
 [requires]
 python_version = "3.7"
