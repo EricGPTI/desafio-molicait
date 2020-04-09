@@ -1,9 +1,13 @@
 from rest_framework import serializers
 from .models import Pagamento
-from django.core.serializers.json import DjangoJSONEncoder
+import json
 
 
-class PagamentoSerializer(serializers.ModelSerializer):
-    class Meta:
-        model: Pagamento
-        fields: ('sessio', 'data', 'total', 'pago', 'troco')
+class PagamentoSerializer:
+    def __init__(self, pgto):
+        self.pgto = pgto
+        
+    def serialize(self):
+        data = json.dumps(self.pgto)
+        print(data)
+        return data
