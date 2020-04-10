@@ -85,7 +85,6 @@ def update_pagamento(request):
     return None
 
 
-
 def uuid_generate():
     """
     Gera id da transação (session)
