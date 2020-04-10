@@ -3,13 +3,17 @@ import uuid
 from decouple import config
 from datetime import datetime
 
+
+conn = ConnectionDB(config('DB_HOST'), config('DB_PORT', cast=int))
+db = conn.connection()
+
+
+
 def save_pagamento(request):
     session = uuid_generate()
     total = request.data.get('total')
     pago = request.data.get('pago')
 
-    conn = ConnectionDB(config('DB_HOST'), config('DB_PORT', cast=int))
-    db = conn.connection()
     pgto = Pagamento(total, pago)
     valores = pgto.pagamento()
     cedulas = str(valores[0])
@@ -27,8 +31,14 @@ def save_pagamento(request):
     return p
 
 
-def get_pagamento(session):
+def get_pagamento():
+    pagamento = Pagamento.get_pagamento(db)
+    return pagamento
+
+
+def update_pagamento(session):
     pass
+
 
 
 def uuid_generate():

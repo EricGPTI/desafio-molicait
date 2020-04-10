@@ -9,5 +9,4 @@ class PagamentoSerializer:
         
     def serialize(self):
         data = json.dumps(self.pgto)
-        print(data)
         return data
