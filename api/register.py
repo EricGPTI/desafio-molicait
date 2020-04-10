@@ -8,8 +8,14 @@ conn = ConnectionDB(config('DB_HOST'), config('DB_PORT', cast=int))
 db = conn.connection()
 
 
-
 def save_pagamento(request):
+    """
+    Função que gera id para a sessão(identificador da transação), monta o modelo de dados para salvamento de pagamento.
+    :param request: Requisição feita.
+    :type request: object
+    :return: Retorna o modelo de dados que foi salvo para apresentação.
+    :rtype: dict
+    """
     session = uuid_generate()
     total = request.data.get('total')
     pago = request.data.get('pago')
@@ -32,11 +38,23 @@ def save_pagamento(request):
 
 
 def get_pagamentos():
+    """
+    Função que solicita a consulta ao modelo de dados de todos os pagamentos.
+    :return: Retorna uma lista com todos os pagamentos.
+    :rtype: list
+    """
     pagamentos = Pagamento.get_pagamentos(db)
     return pagamentos
 
 
 def update_pagamento(request):
+    """
+    Função para preparação dos dados para udpate.
+    :param request: Requisição de update
+    :type request: object
+    :return: Retorno 1 se houve atualização ou 0 caso não.
+    :rtype: int
+    """
     if request.data.get('session') is not None:
         session = request.data.get('session')
         total = request.data.get('total')
@@ -69,5 +87,10 @@ def update_pagamento(request):
 
 
 def uuid_generate():
+    """
+    Gera id da transação (session)
+    :return: Retorna Id da transação gerado.
+    :rtype: object
+    """
     session = uuid.uuid4()
     return session
