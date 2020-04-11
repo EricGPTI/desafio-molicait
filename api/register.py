@@ -96,8 +96,8 @@ def delete_pagamento(request, id_pagamento):
     :type request: object
     :param id: Número que identifica a transação a ser deletada.
     :type id:
-    :return:
-    :rtype:
+    :return: DeleteResult
+    :rtype: object
     """
     if request.method == 'DELETE':
         deleted = Pagamento.delete_pagamento(db, id_pagamento)

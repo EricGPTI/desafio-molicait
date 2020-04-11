@@ -103,6 +103,13 @@ class Pagamento:
 
     @staticmethod
     def get_pagamentos(db):
+        """
+        Método estático para consulta de todos os pagamentos.
+        :param db: Instância de banco de dados.
+        :type db: object
+        :return: Lista de todos os pagamentos.
+        :rtype: list
+        """
         pgto = db.pagamento.find()
         pagamento = []
         for p in pgto:
@@ -112,12 +119,30 @@ class Pagamento:
 
     @staticmethod
     def get_pagamento(db, id_pagamento):
+        """
+        Método estático para consulta de um pagamento específico pelo id_pagamento.
+        :param db: Instância do banco de dados.
+        :type db: object
+        :param id_pagamento: Id da transação.
+        :type id_pagamento: str
+        :return: Retorna um pagamento específico.
+        :rtype:
+        """
         pagamento = db.pagamento.find_one({'id_pagamento': id_pagamento})
         return pagamento
 
 
     @staticmethod
     def update_pagamento(db, u):
+        """
+        Método estático para update de um registro de pagamento.
+        :param db: Instância de banco de dados.
+        :type db: object
+        :param u: Registro para update
+        :type u: dict
+        :return: Retorna UpdateResult
+        :rtype: object
+        """
         id_pagamento = u['id_pagamento']
         reg_update = Pagamento.get_pagamento(db, id_pagamento)
         new_data = {'$set': u}
@@ -127,6 +152,15 @@ class Pagamento:
 
     @staticmethod
     def delete_pagamento(db, id_pagamento):
+        """
+        Método estático para deleção de um pagamento.
+        :param db: Instância de banco de dados.
+        :type db: object
+        :param id_pagamento: Id da transação de pagamento.
+        :type id_pagamento: str
+        :return:
+        :rtype:
+        """
         id_delete = {'id_pagamento': id_pagamento}
         deleted = db.pagamento.delete_one(id_delete)
         return deleted

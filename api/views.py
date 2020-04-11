@@ -41,14 +41,14 @@ def update_pagamento(request):
 
 
 @api_view(['DELETE'])
-def delete_pagamento(request, id):
+def delete_pagamento(request, id_pagamento):
     """
     View para delete de um pagamento específico.
     :return: Response com status 202 ou 'Registro não existe' ou 405
     :rtype: object
     """
     if request.method == 'DELETE':
-        reg_deleted = register.delete_pagamento(request, id)
+        reg_deleted = register.delete_pagamento(request, id_pagamento)
         if reg_deleted == 1:
             return Response('Registro atualizado com sucesso.', status=status.HTTP_202_ACCEPTED)
         return Response('Registro não existe.')
