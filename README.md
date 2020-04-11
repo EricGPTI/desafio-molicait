@@ -69,7 +69,3 @@ Após enviar a requisição, se houver um registro com id_pagamento igual ao pas
 será deletado.
 
 As demais urls podem ser testadas diretamente na interface do DRF.
-
-```bash
-pip install foobar
-```
