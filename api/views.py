@@ -14,7 +14,7 @@ def pagamentos(request):
     :rtype: object
     """
     if request.method == 'POST':
-        pgto = register.save_pagamentos(request)
+        pgto = register.save_pagamento(request)
         del pgto['_id']
         return Response(pgto)
     elif request.method == 'GET':
@@ -36,5 +36,21 @@ def update_pagamento(request):
         if update == 1:
             return Response('Registro atualizado com sucesso.', status=status.HTTP_202_ACCEPTED)
         return Response('Registro não atualizado.')
+    return Response(f'Operação não autorizada para o método {request.method}',
+                    status=status.HTTP_405_METHOD_NOT_ALLOWED)
+
+
+@api_view(['DELETE'])
+def delete_pagamento(request, id):
+    """
+    View para delete de um pagamento específico.
+    :return: Response com status 202 ou 'Registro não existe' ou 405
+    :rtype: object
+    """
+    if request.method == 'DELETE':
+        reg_deleted = register.delete_pagamento(request, id)
+        if reg_deleted == 1:
+            return Response('Registro atualizado com sucesso.', status=status.HTTP_202_ACCEPTED)
+        return Response('Registro não existe.')
     return Response(f'Operação não autorizada para o método {request.method}',
                     status=status.HTTP_405_METHOD_NOT_ALLOWED)

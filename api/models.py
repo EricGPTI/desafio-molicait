@@ -75,7 +75,6 @@ class Pagamento:
                 str_valor = str(valor)
                 cont_cedulas[str_valor] += 1
                 resto -= valor
-                break
         return cont_cedulas, round(resto, 2)
 
     def calcula_moedas(self, resto):
@@ -86,12 +85,21 @@ class Pagamento:
                 str_valor = str(valor)
                 cont_moedas[str_valor] += 1
                 resto -= round(valor, 2)
-                break
         return cont_moedas
 
     @staticmethod
-    def save_pgto(db, p):
-        db.pagamento.insert_one(p)
+    def save_pagamento(db, p):
+        """
+        Método estático para salvamento de um  pagamento.
+        :param db: Conexão com o banco de dados.
+        :type db: object
+        :param p: Modelo de dados contendo informações de pagamento
+        :type p: dict
+        :return:
+        :rtype:
+        """
+        result_pagamento = db.pagamento.insert_one(p)
+        return result_pagamento
 
     @staticmethod
     def get_pagamentos(db):
@@ -103,18 +111,25 @@ class Pagamento:
         return pagamento
 
     @staticmethod
-    def get_pagamento(db, session):
-        pagamento = db.pagamento.find_one({'session': session})
+    def get_pagamento(db, id_pagamento):
+        pagamento = db.pagamento.find_one({'id_pagamento': id_pagamento})
         return pagamento
 
 
     @staticmethod
     def update_pagamento(db, u):
-        session = u['session']
-        reg_update = Pagamento.get_pagamento(db, session)
+        id_pagamento = u['id_pagamento']
+        reg_update = Pagamento.get_pagamento(db, id_pagamento)
         new_data = {'$set': u}
         pagamento_updated = db.pagamento.update_one(reg_update, new_data)
         return pagamento_updated
+
+
+    @staticmethod
+    def delete_pagamento(db, id_pagamento):
+        id_delete = {'id_pagamento': id_pagamento}
+        deleted = db.pagamento.delete_one(id_delete)
+        return deleted
 
 
 
